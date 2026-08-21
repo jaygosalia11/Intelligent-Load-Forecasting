@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# TensorFlow / Keras model files
+*.h5
+*.hdf5
+*.keras
+
+# Python cache
+*.pyc
