@@ -4,9 +4,9 @@ An LSTM-based time-series forecasting project for predicting resource allocation
 
 ## 📌 Project Overview
 
-Modern computing systems need to allocate resources efficiently according to changing workloads. Predicting future resource requirements can help systems make better resource allocation decisions and avoid unnecessary over-provisioning.
+Modern computing systems need to allocate resources efficiently according to changing workloads. Predicting future resource requirements can help systems make better resource allocation decisions and reduce unnecessary over-provisioning.
 
-This project explores the use of **Long Short-Term Memory (LSTM)** neural networks to forecast future **Resource Allocation** using historical resource utilization and workload data.
+This project uses a **Long Short-Term Memory (LSTM)** neural network to forecast **Resource Allocation** using historical system utilization, workload, and temporal information.
 
 The project focuses on:
 
@@ -14,7 +14,9 @@ The project focuses on:
 - Memory usage
 - Storage usage
 - Workload
-- Time-based features
+- Hour of day
+- Day of week
+- Weekend/weekday information
 - Historical resource allocation
 
 The main objective is to investigate whether an LSTM model can learn temporal patterns from historical system resource data and improve forecasting compared with a simple statistical baseline.
@@ -25,15 +27,16 @@ The main objective is to investigate whether an LSTM model can learn temporal pa
 
 The project aims to:
 
-1. Explore and understand resource utilization data.
-2. Clean and preprocess missing and inconsistent values.
+1. Explore and understand system resource utilization data.
+2. Clean and preprocess the dataset.
 3. Extract useful temporal features from timestamps.
-4. Build time-series sequences from historical observations.
-5. Train an LSTM neural network for resource allocation forecasting.
+4. Construct time-series sequences from historical observations.
+5. Train an LSTM neural network using a 168-hour historical window.
 6. Evaluate the model using standard regression metrics.
-7. Compare the LSTM against a simple baseline.
-8. Experiment with different historical sequence lengths.
-9. Generate future resource allocation forecasts.
+7. Compare the LSTM against a simple mean-based baseline.
+8. Visualize actual versus predicted resource allocation.
+9. Analyze hourly and daily resource allocation patterns.
+10. Generate a forecast for the next 24 hours.
 
 ---
 
@@ -44,9 +47,9 @@ The dataset contains hourly observations of system resource utilization.
 ### Dataset Statistics
 
 - **Observations:** 26,305
-- **Time period:** January 2022 – January 2025
+- **Time Period:** January 2022 – January 2025
 - **Frequency:** Hourly
-- **Target variable:** `Resource Allocation`
+- **Target Variable:** `Resource Allocation`
 
 ### Features
 
@@ -63,17 +66,19 @@ The dataset contains hourly observations of system resource utilization.
 
 ## 🔎 Data Exploration
 
-The initial analysis included:
+The initial exploratory analysis includes:
 
 - Dataset shape and structure
 - Data types
 - Missing-value analysis
+- Duplicate detection
 - Timestamp validation
-- Duplicate timestamp detection
 - Time-gap analysis
 - Statistical summaries
-- Temporal feature exploration
-- Resource allocation distribution
+- Feature distributions
+- Outlier analysis
+- Temporal pattern exploration
+- Resource allocation analysis
 
 The dataset contains hourly observations with a consistent one-hour time interval.
 
@@ -94,24 +99,46 @@ The preprocessing pipeline includes:
 
 ### Temporal Features
 
-The timestamp was used to derive features such as:
+The timestamp is used to derive:
 
-- Hour of day
-- Day of week
-- Month
-- Weekend/weekday information
+- `hour` — hour of the day
+- `day_of_week` — day of the week
+- `is_weekend` — indicator for Saturday and Sunday
 
-These features allow the model to capture potential daily and weekly patterns.
+These features provide the model with information about daily and weekly temporal patterns.
 
 ---
 
 ## ⏱️ Time-Series Sequence Construction
 
-Instead of treating each observation independently, historical observations are grouped into sequences.
-
-Two sequence lengths were investigated:
-
-### 168-hour sequence
+The final LSTM model uses a **168-hour historical sequence**, representing seven days of previous observations.
 
 ```text
 168 hours = 7 days
+
+
+
+
+## 🛠️ Tech Stack
+
+### Programming Language
+- **Python**
+
+### Data Processing & Analysis
+- **Pandas** — data loading, cleaning, transformation, and analysis
+- **NumPy** — numerical operations and array manipulation
+
+### Data Visualization
+- **Matplotlib** — time-series plots, distributions, and forecasting visualizations
+
+### Machine Learning & Deep Learning
+- **Scikit-learn** — data scaling and model evaluation metrics
+- **TensorFlow / Keras** — LSTM model development, training, evaluation, and model loading
+
+### Development Environment
+- **Jupyter Notebook** — project development and experimentation
+- **Python Virtual Environment (`.venv`)** — dependency isolation
+
+### Version Control
+- **Git** — source code version control
+- **GitHub** — repository hosting and project management
